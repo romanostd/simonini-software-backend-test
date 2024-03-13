@@ -1,0 +1,31 @@
+{
+  "name": "simonini-software-backend-test",
+  "version": "1.0.0",
+  "description": "Este teste é projetado para avaliar habilidades em desenvolver uma API RESTful usando Node.js, Express, e Typescript. O foco está em permitir o registro de usuários e possibilitar que cada usuário crie posts. O projeto utilizará MongoDB como banco de dados e o Prisma como ORM. Além disso, o projeto deve ser configurável para execução em um ambiente Dockerizado, utilizando `docker compose`, incluindo o banco de dados. Os testes unitários devem ser implementados usando Jest. A escolha da arquitetura do projeto é deixada ao seu critério, permitindo a liberdade de aplicar a abordagem que considerar mais adequada.",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node src/app.ts",
+    "dev": "nodemon src/app.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^5.11.0",
+    "@types/bcrypt": "^5.0.2",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/node": "^20.11.27",
+    "bcrypt": "^5.1.1",
+    "express": "^4.18.3",
+    "jsonwebtoken": "^9.0.2",
+    "nodemon": "^3.1.0",
+    "prisma": "^5.11.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.2"
+  },
+  "devDependencies": {
+    "prisma": "^5.11.0"
+  }
+}
