@@ -1,51 +1,93 @@
-# Teste de Backend com Node.js, Express, e Typescript
+# Node.js Backend Project
 
-## Descrição
+## Description
 
-Este teste é projetado para avaliar habilidades em desenvolver uma API RESTful usando Node.js, Express, e Typescript. O foco está em permitir o registro de usuários e possibilitar que cada usuário crie posts. O projeto utilizará MongoDB como banco de dados e o Prisma como ORM. Além disso, o projeto deve ser configurável para execução em um ambiente Dockerizado, utilizando `docker compose`, incluindo o banco de dados. Os testes unitários devem ser implementados usando Jest. A escolha da arquitetura do projeto é deixada ao seu critério, permitindo a liberdade de aplicar a abordagem que considerar mais adequada.
+This project is a Node.js, Express, and TypeScript-based backend system. It allows users to register, authenticate, and create posts. MongoDB is used for data persistence, and Prisma serves as the ORM for database interaction. Docker is employed to containerize the application and database, ensuring consistent environments across development and production. Jest is used for unit testing to ensure code quality.
 
-## Instruções
+## Getting Started
 
-Você deverá criar um fork deste projeto, e desenvolver em cima do seu fork. Use o README principal do seu repositório para nos contar como foi resolver seu teste, as decisões tomadas, como você organizou e separou seu código e, principalmente, as instruções de como rodar seu projeto e se você conseguir explicar como fazer isso, você já começou bem!
+### Prerequisites
 
-## Requisitos Funcionais
+- Node.js
+- Docker and Docker Compose
+- MongoDB
+- A package manager like npm or yarn
 
-1. **Cadastro de Usuários:**
-   - Implementar um endpoint para o cadastro de novos usuários.
-   - Os usuários devem fornecer um nome, email (único no sistema) e senha para o registro.
+### Installation
 
-2. **Autenticação:**
-   - Implementar autenticação JWT para os usuários, gerando um token JWT no login.
+1. Clone the repository:
 
-3. **Criação de Posts:**
-   - Permitir que usuários autenticados criem posts.
-   - Cada post deve conter um título e um corpo de texto e estar vinculado ao usuário que o criou.
+   git clone <repository-url>
 
-## Requisitos Não Funcionais
+2. Navigate to the project directory:
 
-1. **Arquitetura:**
-   - A escolha da arquitetura do software fica a critério do candidato. Recomenda-se documentar a abordagem escolhida e justificar as decisões arquiteturais tomadas.
+   `cd simonini-software-backend-test`
 
-2. **Prisma e MongoDB:**
-   - Utilizar o Prisma como ORM para interagir com o MongoDB.
+3. Install dependencies:
 
-3. **Docker:**
-   - Fornecer um arquivo `docker-compose.yml` para orquestrar a aplicação e o MongoDB.
-   - Utilizar o comando `docker compose up` para iniciar o ambiente de desenvolvimento.
+   `npm install`
 
-4. **Testes Unitários:**
-   - Implementar testes unitários usando Jest para garantir a qualidade e a correção do código.
+4. Set up environment variables:
 
-## Entrega
+   Create a .env file in the root directory and set the necessary environment variables such as:
 
-- O código deve ser disponibilizado em um repositório Git (ex: GitHub, GitLab).
+   - JWT_SECRET="secret"
+   - DATABASE_URL="mongodb://root:prisma@localhost:27017/prisma-mongo?authSource=admin&retryWrites=true&w=majority"
 
-## Critérios de Avaliação
+5. Running the database:
 
-- Qualidade do código e uso apropriado do Typescript.
-- Implementação dos requisitos funcionais e não funcionais.
-- Cobertura e qualidade dos testes unitários com Jest.
-- Documentação do projeto, incluindo instruções de configuração e execução.
-- A escolha e justificativa da arquitetura adotada, avaliando a adequação da solução ao problema e a eficácia em atender aos requisitos do projeto.
+   `docker-compose up -d --build`
 
-Desejamos a todos sucesso e um desenvolvimento produtivo!
+6. And finelly, run the application:
+
+   `npm start`
+
+### Now you can test the endpoints!!
+
+API Endpoints:
+
+1.  User Registration:
+
+- Endpoint: /users/register
+- Method: POST
+- Body:
+
+{
+"name": "teste",
+"email": "teste.teste@example.com",
+"password": "teste23"
+}
+
+2. User Login
+
+- Endpoint: /users/login
+- Method: POST
+- Body:
+
+{
+"email": "teste.teste@example.com",
+"password": "teste23"
+}
+
+3. Create Post
+
+- Endpoint: /posts
+- Method: POST
+- Headers:
+  - Content-Type: application/json
+  - Authorization: Bearer <your-genereted-token>
+- Body:
+
+{
+"title": "My First Post",
+"content": "This is the content of my first post."
+}
+
+4. Get Posts
+
+- Endpoint: /posts
+- Method: GET
+- Description: Retrieve all posts.
+
+### Considerations
+When developing this Node.js and Express API with TypeScript, I chose a modular architecture to streamline development and scalability. Leveraging Prisma with MongoDB for efficient ORM operations proved effective. Authentication was implemented using JWT for security. The use of Docker compose for environment setup and Jest for unit testing were part of the specified stack, aligning with the goal of creating a robust and maintainable application. These decisions were guided by best practices and project requirements, aiming to create a user-friendly platform for user registration and post creation. For this project, the choice to run only the MongoDB database in Docker, instead of the entire application, was driven by unforeseen issues with replica set initialization and networking complexities in Docker containers. This streamlined the development process, eliminating the need for extensive Docker configurations, and allowed me to focus on the application logic and functionality without the added overhead of Docker for the Node.js environment. This approach ensured that we could reliably utilize MongoDB's features while maintaining the simplicity and ease of debugging the application in a local development environment.

@@ -1,28 +1,11 @@
-version: '3.8'
-
+version: '3.7'
 services:
-  app:
-    build: .
-    ports:
-      - "3000:3000"
+  mongodb_container:
+    image: prismagraphql/mongo-single-replica:4.4.3-bionic
     environment:
-      - DATABASE_URL=mongodb://root:password@mongo:27017/mydb?authSource=admin&retryWrites=true&w=majority
-    depends_on:
-      - mongo
-    volumes:
-      - .:/app
-      - /app/node_modules
-
-  mongo:
-    image: mongo:latest
-    environment:
+      JWT_SECRET: secret
       MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: password
-      MONGO_INITDB_DATABASE: mydb
+      MONGO_INITDB_ROOT_PASSWORD: prisma
+      INIT_WAIT_SEC: 3
     ports:
-      - "27017:27017"
-    volumes:
-      - mongo-data:/data/db
-
-volumes:
-  mongo-data:
+      - 27017:27017
