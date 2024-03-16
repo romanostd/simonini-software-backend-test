@@ -79,7 +79,7 @@ API Endpoints:
 - Method: POST
 - Headers:
   - Content-Type: application/json
-  - Authorization: Bearer <your-genereted-token>
+  - Authorization: Bearer `our-genereted-token`
 - Body:
 
 {
