@@ -1,4 +1,4 @@
-import { createPost, getPosts } from "../controllers/postController";
+import { createPost, getPosts } from "../interfaces/controllers/postController";
 import { mockRequest, mockResponse } from "../utils/testUtils";
 import { PrismaClient } from "@prisma/client";
 
@@ -36,7 +36,8 @@ describe("PostController", () => {
         expect.objectContaining({
           title: "New Post",
           content: "Content of the new post",
-          userId: expect.any(String),
+          authorId: expect.any(String),
+          id: expect.any(String),
         })
       );
     });
@@ -73,11 +74,8 @@ describe("PostController", () => {
           expect.objectContaining({
             title: expect.any(String),
             content: expect.any(String),
-            author: expect.objectContaining({
-              id: expect.any(String),
-              email: expect.any(String),
-              name: expect.any(String),
-            }),
+            authorId: expect.any(String),
+            id: expect.any(String),
           }),
         ])
       );

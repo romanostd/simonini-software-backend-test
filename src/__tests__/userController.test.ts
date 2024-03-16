@@ -1,4 +1,7 @@
-import { createUser, loginUser } from "../controllers/userController";
+import {
+  createUser,
+  loginUser,
+} from "../interfaces/controllers/userController";
 import {
   mockRequest,
   mockResponse,
@@ -44,7 +47,7 @@ describe("UserController", () => {
       expect(res.status).toHaveBeenCalledWith(400);
       expect(res.json).toHaveBeenCalledWith(
         expect.objectContaining({
-          error: "Email already in use",
+          error: "User already exists",
         })
       );
     });
