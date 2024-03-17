@@ -2,7 +2,7 @@
 
 ## Description
 
-This project is a Node.js, Express, and TypeScript-based backend system. It allows users to register, authenticate, and create posts. MongoDB is used for data persistence, and Prisma serves as the ORM for database interaction. Docker is employed to containerize the application and database, ensuring consistent environments across development and production. Jest is used for unit testing to ensure code quality.
+This project is a backend system based on Node.js, Express, and TypeScript, structured using Domain-Driven Design (DDD) principles. It supports user registration, authentication, and post creation. MongoDB is used for data persistence, managed through Prisma as the ORM. Docker Compose is utilized to containerize both the application and the database, ensuring consistent environments across development, testing, and production. Jest is employed for unit testing to maintain code quality.
 
 ## Getting Started
 
@@ -23,26 +23,50 @@ This project is a Node.js, Express, and TypeScript-based backend system. It allo
 
    `cd simonini-software-backend-test`
 
-3. Install dependencies:
-
-   `npm install`
-
-4. Set up environment variables:
+3. Set up environment variables:
 
    Create a .env file in the root directory and set the necessary environment variables such as:
 
    - JWT_SECRET="secret"
-   - DATABASE_URL="mongodb://root:prisma@localhost:27017/prisma-mongo?authSource=admin&retryWrites=true&w=majority"
-
-5. Running the database:
+   - DATABASE_URL="mongodb://root:prisma@mongodb_container:27017/prisma-mongo?authSource=admin&retryWrites=true&w=majority"
+  
+4. Running the application:
 
    `docker-compose up -d --build`
 
-6. And finelly, run the application:
+5. After starting the services with Docker Compose, you might need to manually initialize the MongoDB replica set. Follow these steps to interact with the MongoDB inside the Docker container:
 
-   `npm start`
+5.1 Use the following command to enter the MongoDB shell inside the container:
 
-7. To test the application, you need to run:
+  `docker exec -it simonini-software-backend-test-mongodb_container-1 mongo -u root -p prisma --authenticationDatabase admin`
+  
+5.2 Once inside the MongoDB shell, authenticate yourself as the admin user:
+
+   `use admin`
+   `db.auth("root", "prisma")`
+
+5.3 Initiate the Replica Set:
+
+`rs.initiate({
+  _id: "rs0",
+  members: [
+    { _id: 0, host: "mongodb_container:27017" }
+  ]
+})`
+
+Now the application is perfectly running
+
+===============================================================================================
+7. To test the application, you need to create the test database:
+
+   `docker-compose -f docker-compose.test.yml up -d`
+
+7.1. Install the dependencies:
+
+   `npm install`
+   `npx prisma generate`
+   
+7.2. And finely:
 
    `npm test`
 
@@ -95,4 +119,4 @@ API Endpoints:
 
 ### Considerations
 
-When developing this Node.js and Express API with TypeScript, I chose a modular architecture to streamline development and scalability. Leveraging Prisma with MongoDB for efficient ORM operations proved effective. Authentication was implemented using JWT for security. The use of Docker compose for environment setup and Jest for unit testing were part of the specified stack, aligning with the goal of creating a robust and maintainable application. These decisions were guided by best practices and project requirements, aiming to create a user-friendly platform for user registration and post creation. For this project, the choice to run only the MongoDB database in Docker, instead of the entire application, was driven by unforeseen issues with replica set initialization and networking complexities in Docker containers. This streamlined the development process, eliminating the need for extensive Docker configurations, and allowed me to focus on the application logic and functionality without the added overhead of Docker for the Node.js environment. This approach ensured that we could reliably utilize MongoDB's features while maintaining the simplicity and ease of debugging the application in a local development environment.
+Adopting DDD principles facilitated a modular and scalable architecture, simplifying complex domain logic handling. Integrating the entire application within Docker Compose streamlined deployment processes and ensured consistency across environments. Prisma's efficient ORM capabilities for MongoDB enhanced the development experience, while JWT provided secure authentication mechanisms. The comprehensive test setup with Jest, tailored to a Dockerized environment, supported rigorous validation of business logic and functionalities.
