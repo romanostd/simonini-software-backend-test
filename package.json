@@ -6,7 +6,7 @@
   "scripts": {
     "start": "ts-node src/app.ts",
     "dev": "nodemon src/app.ts",
-    "test": "cross-env DATABASE_URL=%DATABASE_URL_TEST% jest"
+    "test": "cross-env DATABASE_URL=\"mongodb://root:prisma@localhost:27017/prisma-mongo?authSource=admin&retryWrites=true&w=majority\" jest"
   },
   "keywords": [],
   "author": "",

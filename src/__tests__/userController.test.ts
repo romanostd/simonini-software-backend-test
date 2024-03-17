@@ -56,7 +56,7 @@ describe("UserController", () => {
   describe("loginUser", () => {
     it("should log in an existing user and return a JWT token", async () => {
       const req = mockRequest({
-        body: { email: "test@example.com", password: "password" },
+        body: { email: randomEmail, password: "password" },
       });
       const res = mockResponse();
       await loginUser(req, res);
@@ -70,7 +70,7 @@ describe("UserController", () => {
 
     it("should not log in with incorrect password and return status 401", async () => {
       const req = mockRequest({
-        body: { email: "test@example.com", password: "wrongpassword" },
+        body: { email: randomEmail, password: "wrongpassword" },
       });
       const res = mockResponse();
       await loginUser(req, res);
