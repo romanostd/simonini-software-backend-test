@@ -1,11 +1,37 @@
-version: '3.7'
+version: "3.7"
+
 services:
   mongodb_container:
-    image: prismagraphql/mongo-single-replica:4.4.3-bionic
+    image: mongo:4.4.3-bionic
     environment:
-      JWT_SECRET: secret
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: prisma
-      INIT_WAIT_SEC: 3
+      MONGO_INITDB_DATABASE: prisma-mongo
+    command: ["mongod", "--replSet", "rs0"]
     ports:
-      - 27017:27017
+      - "27017:27017"
+    volumes:
+      - mongodb_data_container:/data/db
+    networks:
+      - app-network
+
+  app_container:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      # DATABASE_URL: mongodb://root:prisma@mongodb_container:27017/prisma-mongo?authSource=admin&retryWrites=true&w=majority
+      JWT_SECRET: secret
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongodb_container
+    networks:
+      - app-network
+
+volumes:
+  mongodb_data_container:
+
+networks:
+  app-network:
+    driver: bridge
