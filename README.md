@@ -54,9 +54,7 @@ This project is a backend system based on Node.js, Express, and TypeScript, stru
   ]
 })`
 
-Now the application is perfectly running
-
-===================================================
+Now the application is perfectly running.
 
 7. To test the application, you need to create the test database:
 
